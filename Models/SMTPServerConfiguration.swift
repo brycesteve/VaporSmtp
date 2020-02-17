@@ -1,9 +1,4 @@
-//
-//  File.swift
-//  
-//
-//  Created by Steve Bryce on 13/02/2020.
-//
+
 import NIO
 
 public struct SMTPServerConfig {

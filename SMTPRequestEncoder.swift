@@ -1,9 +1,4 @@
-//
-//  File.swift
-//  
-//
-//  Created by Steve Bryce on 14/02/2020.
-//
+
 
 import NIO
 import NIOFoundationCompat
