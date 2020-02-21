@@ -4,7 +4,7 @@ import Vapor
 
 extension Request {
     public var smtp: SMTP {
-        return application.smtp
+        return SMTP(application: application, on: self.eventLoop)
     }
 }
 

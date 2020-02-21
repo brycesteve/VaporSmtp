@@ -7,9 +7,7 @@ import NIOTLS
 import NIOSSL
 
 public struct SMTP {
-    public var eventLoopGroup: EventLoopGroup {
-        self.application.eventLoopGroup
-    }
+    public var eventLoopGroup: EventLoopGroup
 
     struct ConfigurationKey: StorageKey {
         typealias Value = SMTPServerConfig
@@ -30,6 +28,16 @@ public struct SMTP {
 
     
     let application: Application
+    
+    init (application: Application){
+        self.application = application
+        self.eventLoopGroup = application.eventLoopGroup
+    }
+    
+    init (application: Application, on eventLoop: EventLoop) {
+        self.application = application
+        self.eventLoopGroup = eventLoop
+    }
     
     public func use(_ config: SMTPServerConfig) {
         self.configuration = config
