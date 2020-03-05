@@ -10,10 +10,10 @@ public struct Attachment {
     let name: String
     let contentType: String
     let data: Data
-    let disposition: ContentDisposition = .attachment
+    var disposition: ContentDisposition = .attachment
     /// Use this ID to reference inline attachements in email body
     /// - EXAMPLE: \<img src="cid:contentIdHere" /\>
-    let contentId: String? = nil
+    var contentId: String? = nil
 
     public init(name: String, contentType: String, data: Data, disposition: ContentDisposition = .attachment, contentId: String? = nil) {
         self.name = name
