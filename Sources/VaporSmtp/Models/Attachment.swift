@@ -15,7 +15,7 @@ public struct Attachment {
     /// - EXAMPLE: \<img src="cid:contentIdHere" /\>
     let contentId: String? = nil
 
-    public init(name: String, contentType: String, data: Data, disposition: ContentDisposition = .attachment, contentId: String = nil) {
+    public init(name: String, contentType: String, data: Data, disposition: ContentDisposition = .attachment, contentId: String? = nil) {
         self.name = name
         self.contentType = contentType
         self.data = data
