@@ -77,15 +77,40 @@ public struct Email {
         }
         
         out.writeString("--\(altBoundary)\r\n")
+        
+        let relatedBoundary = self.boundary()
+        if self.attachments.filter {$0.disposition == .inline}.count > 0 {
+            
+            out.writeString("Content-type: multipart/related; boundary=\"\(relatedBoundary)\"\r\n")
+            out.writeString("Mime-Version: 1.0\r\n\r\n")
+            
+            for attachment in self.attachments.filter {$0.disposition == .inline} {
+                let disp = attachment.disposition.rawValue
+                out.writeString("--\(relatedBoundary)\r\n")
+                out.writeString("Content-type: \(attachment.contentType)\r\n")
+                out.writeString("Content-Transfer-Encoding: base64\r\n")
+                if attachment.contentId != nil {
+                    out.writeString("Content-ID: <\(attachment.contentId!)>\r\n")
+                }
+                out.writeString("Content-Disposition: \(disp); filename=\"\(attachment.name)\"\r\n\r\n")
+                out.writeString("\(attachment.data.base64EncodedString(options: .lineLength76Characters))\r\n")
+            }
+            
+            
+            out.writeString("--\(relatedBoundary)\r\n")
+        }
+        
         out.writeString("Content-Type: text/html; charset=\"UTF-8\"\r\n\r\n")
         out.writeString("\(self.body)\r\n")
-        
+        if self.attachments.filter {$0.disposition == .inline}.count > 0 {
+            out.writeString("--\(relatedBoundary)\r\n")
+        }
         //End Alternative
         out.writeString("--\(altBoundary)--\r\n")
         
         
-        if self.attachments.count > 0 {
-            for attachment in self.attachments {
+        if self.attachments.filter {$0.disposition == .attachment}.count > 0 {
+            for attachment in self.attachments.filter {$0.disposition == .attachment} {
                 let disp = attachment.disposition.rawValue
                 out.writeString("--\(mixedBoundary)\r\n")
                 out.writeString("Content-type: \(attachment.contentType)\r\n")
