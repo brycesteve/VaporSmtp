@@ -91,7 +91,7 @@ public struct Email {
                 out.writeString("Content-type: \(attachment.contentType)\r\n")
                 out.writeString("Content-Transfer-Encoding: base64\r\n")
                 if attachment.contentId != nil {
-                    out.writeString("Content-ID: <\(attachment.contentId)>")
+                    out.writeString("Content-ID: <\(attachment.contentId!)>")
                 }
                 out.writeString("Content-Disposition: \(disp); filename=\"\(attachment.name)\"\r\n\r\n")
                 out.writeString("\(attachment.data.base64EncodedString(options: .lineLength76Characters))\r\n")
