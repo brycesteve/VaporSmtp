@@ -86,10 +86,14 @@ public struct Email {
         
         if self.attachments.count > 0 {
             for attachment in self.attachments {
+                let disp = attachment.disposition.rawValue
                 out.writeString("--\(mixedBoundary)\r\n")
                 out.writeString("Content-type: \(attachment.contentType)\r\n")
                 out.writeString("Content-Transfer-Encoding: base64\r\n")
-                out.writeString("Content-Disposition: attachment; filename=\"\(attachment.name)\"\r\n\r\n")
+                if attachment.contentId != nil {
+                    out.writeString("Content-ID: <\(attachment.contentId)>")
+                }
+                out.writeString("Content-Disposition: \(disp); filename=\"\(attachment.name)\"\r\n\r\n")
                 out.writeString("\(attachment.data.base64EncodedString(options: .lineLength76Characters))\r\n")
             }
             
