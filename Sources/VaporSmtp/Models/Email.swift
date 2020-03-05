@@ -103,7 +103,7 @@ public struct Email {
         out.writeString("Content-Type: text/html; charset=\"UTF-8\"\r\n\r\n")
         out.writeString("\(self.body)\r\n")
         if self.attachments.filter {$0.disposition == .inline}.count > 0 {
-            out.writeString("--\(relatedBoundary)\r\n")
+            out.writeString("--\(relatedBoundary)--\r\n")
         }
         //End Alternative
         out.writeString("--\(altBoundary)--\r\n")
