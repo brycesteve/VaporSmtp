@@ -3,7 +3,7 @@
 import NIO
 import NIOSSL
 
-private let sslContext = try! NIOSSLContext(configuration: TLSConfiguration.forClient())
+private let sslContext = try! NIOSSLContext(configuration: TLSConfiguration.makeClientConfiguration())
 
 final class SendEmailHandler: ChannelInboundHandler {
     typealias InboundIn = SMTPResponse
