@@ -59,7 +59,7 @@ public struct SMTP {
             switch self.configuration.tlsConfiguration {
             case .regularTLS:
                 do {
-                    let sslContext = try NIOSSLContext(configuration: .forClient())
+                    let sslContext = try NIOSSLContext(configuration: .makeClientConfiguration())
                     let sslHandler = try NIOSSLClientHandler(context: sslContext, serverHostname: self.configuration.hostname)
                     handlers.insert(sslHandler, at: 0)
                 }
